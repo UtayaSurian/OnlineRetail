@@ -11,13 +11,13 @@ namespace OnlineRetail.WebUI.Controllers
 {
     public class ProductManagerController : Controller
     {
-        ProductRepository context; //Object to call all methods delcared in InMemory
-        ProductCategoryRepository productCategories; //To load all categories from the database for drop-down list
+        InMemoryRepository<Product> context; //Object to call all methods delcared in InMemory
+        InMemoryRepository<ProductCategory> productCategories; //To load all categories from the database for drop-down list
         public ProductManagerController()
         {
             //Initialize the object automatically
-            context = new ProductRepository();
-            productCategories = new ProductCategoryRepository();
+            context = new InMemoryRepository<Product>();
+            productCategories = new InMemoryRepository<ProductCategory>();
         }
         // GET: ProductManager
         public ActionResult Index()

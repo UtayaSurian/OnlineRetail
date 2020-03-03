@@ -10,11 +10,11 @@ namespace OnlineRetail.WebUI.Controllers
 {
     public class ProductCategoryManagerController : Controller
     {
-        ProductCategoryRepository context; //Object to call all methods delcared in InMemory
+        InMemoryRepository<ProductCategory> context; //Object to call all methods delcared in InMemory
         public ProductCategoryManagerController()
         {
             //Initialize the object automatically
-            context = new ProductCategoryRepository();
+            context = new InMemoryRepository<ProductCategory>();
         }
         // GET: ProductManager
         public ActionResult Index()
