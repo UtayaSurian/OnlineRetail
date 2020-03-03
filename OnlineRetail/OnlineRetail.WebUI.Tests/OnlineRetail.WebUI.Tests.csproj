@@ -6,7 +6,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{97907000-2C53-4C8A-9036-2AA62AF82962}</ProjectGuid>
+    <ProjectGuid>{23EFF9E1-16BF-4D56-BA06-9456E5CB289D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OnlineRetail.WebUI.Tests</RootNamespace>
@@ -100,7 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OnlineRetail.WebUI\OnlineRetail.WebUI.csproj">
-      <Project>{8BF0BF62-83F6-4E60-9741-493A43FAA14C}</Project>
+      <Project>{224BD297-B02A-4DE9-88F4-63B1A44D6299}</Project>
       <Name>OnlineRetail.WebUI</Name>
     </ProjectReference>
   </ItemGroup>
