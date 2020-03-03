@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using OnlineRetail.Core.Models;
+using OnlineRetail.Core.ViewModels;
 using OnlineRetail.DataAccess.InMemory;
 
 namespace OnlineRetail.WebUI.Controllers
@@ -11,10 +12,12 @@ namespace OnlineRetail.WebUI.Controllers
     public class ProductManagerController : Controller
     {
         ProductRepository context; //Object to call all methods delcared in InMemory
+        ProductCategoryRepository productCategories; //To load all categories from the database for drop-down list
         public ProductManagerController()
         {
             //Initialize the object automatically
             context = new ProductRepository();
+            productCategories = new ProductCategoryRepository();
         }
         // GET: ProductManager
         public ActionResult Index()
@@ -27,13 +30,16 @@ namespace OnlineRetail.WebUI.Controllers
         //To fill up product details
         public ActionResult Create()
         {
-            Product product = new Product();
-            return View(product);
+            ProductManagerViewModel viewModel = new ProductManagerViewModel();
+            viewModel.Product = new Product(); //To associate with product model
+            viewModel.ProductCategories = productCategories.Collection(); //To extract all categories from the object of viewModel
+     
+            return View(viewModel); //Return all category and product of models to view page
         }
 
         [HttpPost]
         public ActionResult Create(Product product)
-        {
+        {  
             if (!ModelState.IsValid) //Check for validation that in product model
             {
                 return View(product);   //Return back the page if user failed to meet the validation
@@ -57,7 +63,11 @@ namespace OnlineRetail.WebUI.Controllers
                 return HttpNotFound();
             }
             else{
-                return View(product);
+                ProductManagerViewModel viewModel = new ProductManagerViewModel();
+                viewModel.Product = product;
+                viewModel.ProductCategories = productCategories.Collection();
+
+                return View(viewModel);
             }
         }
         [HttpPost]

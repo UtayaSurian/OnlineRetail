@@ -48,7 +48,7 @@ namespace OnlineRetail.DataAccess.InMemory
             }
             else
             {
-                throw new Exception("Product no found");
+                throw new Exception("Product not found");
             }
         }
 
@@ -62,7 +62,7 @@ namespace OnlineRetail.DataAccess.InMemory
             }
             else
             {
-                throw new Exception("Product no found!");
+                throw new Exception("Product not found!");
             }
         }
 
@@ -80,7 +80,7 @@ namespace OnlineRetail.DataAccess.InMemory
             }
             else
             {
-                throw new Exception("Product no found!");
+                throw new Exception("Product not found!");
             }
         }
     }
