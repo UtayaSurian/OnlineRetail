@@ -13,7 +13,7 @@ namespace OnlineRetail.DataAccess.SQL.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202003040430492_Initial"; }
+            get { return "202003041129080_Initial"; }
         }
         
         string IMigrationMetadata.Source
