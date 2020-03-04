@@ -11,6 +11,7 @@ using OnlineRetail.DataAccess.InMemory;
 
 namespace OnlineRetail.WebUI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProductManagerController : Controller
     {
         IRepository<Product> context; //Object to call all methods delcared in InMemory

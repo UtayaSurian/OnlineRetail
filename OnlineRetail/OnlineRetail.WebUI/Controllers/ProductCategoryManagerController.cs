@@ -9,6 +9,7 @@ using OnlineRetail.DataAccess.InMemory;
 
 namespace OnlineRetail.WebUI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProductCategoryManagerController : Controller
     {
         IRepository<ProductCategory> context; //Object to call all methods delcared in InMemory
