@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Caching;
+using OnlineRetail.Core.Contracts;
 
 namespace OnlineRetail.DataAccess.InMemory
 {                                        //The generic class use for cache, create,edit and delete
                                         //To avoid deduplication of codes
                                         //Reference: https://www.youtube.com/watch?v=vCw_LhhSFU4
                                         //Reference: https://teamtreehouse.com/library/creating-a-generic-base-repository-class
-    public class InMemoryRepository<G> where G : Core.Models.BaseEntity //Inherit from base entity abstract class
+    public class InMemoryRepository<G> : IRepository<G> where G : Core.Models.BaseEntity //Inherit from base entity abstract class
     {
         ObjectCache cache = MemoryCache.Default;
         List<G> items; //placeholder

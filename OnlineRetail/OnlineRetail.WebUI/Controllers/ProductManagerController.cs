@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using OnlineRetail.Core.Contracts;
 using OnlineRetail.Core.Models;
 using OnlineRetail.Core.ViewModels;
 using OnlineRetail.DataAccess.InMemory;
@@ -11,13 +12,13 @@ namespace OnlineRetail.WebUI.Controllers
 {
     public class ProductManagerController : Controller
     {
-        InMemoryRepository<Product> context; //Object to call all methods delcared in InMemory
-        InMemoryRepository<ProductCategory> productCategories; //To load all categories from the database for drop-down list
-        public ProductManagerController()
+        IRepository<Product> context; //Object to call all methods delcared in InMemory
+        IRepository<ProductCategory> productCategories; //To load all categories from the database for drop-down list
+        public ProductManagerController(IRepository<Product> productContext, IRepository<ProductCategory> productCategoriesContext)
         {
             //Initialize the object automatically
-            context = new InMemoryRepository<Product>();
-            productCategories = new InMemoryRepository<ProductCategory>();
+            context = productContext;
+            productCategories = productCategoriesContext;
         }
         // GET: ProductManager
         public ActionResult Index()
