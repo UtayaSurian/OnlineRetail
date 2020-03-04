@@ -1,5 +1,6 @@
 ﻿using OnlineRetail.Core.Contracts;
 using OnlineRetail.Core.Models;
+using OnlineRetail.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,8 @@ using System.Threading.Tasks;
 using System.Web;
 
 namespace OnlineRetail.Services
-{
-    public class CartService
+{                                                                        //Cart database
+    public class CartService : ICartService           
     {
         IRepository<Product> productContext;
         IRepository<Cart> cartContext;
@@ -109,6 +110,60 @@ namespace OnlineRetail.Services
                 cartContext.Commit();
             }
 
+        }
+    
+        public List<CartItemViewModel> GetCartItems(HttpContextBase httpContext)
+        {   //Get the cart from the database
+            Cart cart = GetCart(httpContext, false);    //return empty if not basket is available
+
+            if (cart != null)
+            {                   //retunr the data to cart
+                var results = (from c in cart.CartItems
+                              join p in productContext.Collection() on c.ProductId equals p.Id
+                              select new CartItemViewModel()
+                              {
+
+                                  id = c.Id,
+                                  Quantity = c.Quantity,
+                                  ProductName = p.Name,
+                                  Image = p.Image,
+                                  Price = p.Price
+
+                              }).ToList();
+
+                return results;
+            }
+            else
+            {
+                return new List<CartItemViewModel>(); 
+            }
+        }
+
+
+        public CartSummaryViewModel GetCartSummary(HttpContextBase httpContext)
+        {
+            Cart cart = GetCart(httpContext, false); //no need to create if it's empty
+            CartSummaryViewModel model = new CartSummaryViewModel(0,0); //show zeros in home page
+            if (cart != null)
+            {   //count the total quantity from the cart table
+                //? means return null if no ietms
+                int? cartCount = (from item in cart.CartItems
+                                  select item.Quantity).Sum();
+
+                decimal? cartTotal = (from item in cart.CartItems
+                                      join p in productContext.Collection() on item.ProductId equals p.Id
+                                      select item.Quantity * p.Price).Sum();
+
+                model.CartCount = cartCount ?? 0;       //retunr 0 if not value in cartCount
+                model.CartTotal = cartTotal ?? decimal.Zero;
+
+
+                return model;
+            }
+            else
+            {
+                return model;
+            }
         }
     }
 }
