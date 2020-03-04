@@ -165,5 +165,13 @@ namespace OnlineRetail.Services
                 return model;
             }
         }
+
+        public void ClearCart(HttpContextBase httpContext)
+        {
+            Cart cart = GetCart(httpContext, false);
+            cart.CartItems.Clear();         //LINQ method to clear the cart
+            cartContext.Commit();
+        }
     }
+
 }
