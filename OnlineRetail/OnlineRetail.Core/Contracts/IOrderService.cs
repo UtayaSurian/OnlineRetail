@@ -11,6 +11,8 @@ namespace OnlineRetail.Core.Contracts
     public interface IOrderService
     {
         void CreateOrder(Order baseOrder, List<CartItemViewModel> cartItems);
-    
+        List<Order> GetOrderList();
+        Order GetOrder(string Id);
+        void UpdateOrder(Order updateOrder);
     }
 }

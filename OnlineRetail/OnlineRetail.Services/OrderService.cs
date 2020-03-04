@@ -34,5 +34,24 @@ namespace OnlineRetail.Services
             orderContext.Insert(baseOrder);
             orderContext.Commit();
         }
+
+        //Return list of orders to admin
+        public List<Order> GetOrderList()
+        {
+            return orderContext.Collection().ToList();
+        }
+
+        //For individual order
+        public Order GetOrder(string Id)
+        {
+            return orderContext.Find(Id);
+        }
+
+        //for admin to update the order status for customers
+        public void UpdateOrder(Order updateOrder)
+        {
+            orderContext.Update(updateOrder);
+            orderContext.Commit();
+        }
     }
 }
