@@ -12,15 +12,15 @@ namespace OnlineRetail.DataAccess.SQL.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
-                        BasketId = c.String(),
+                        CartId = c.String(),
                         ProductId = c.String(),
                         Quantity = c.Int(nullable: false),
                         CreatedAt = c.DateTimeOffset(nullable: false, precision: 7),
-                        Cart_Id = c.String(maxLength: 128),
+                   
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Carts", t => t.Cart_Id)
-                .Index(t => t.Cart_Id);
+                .ForeignKey("dbo.Carts", t => t.CartId)
+                .Index(t => t.CartId);
             
             CreateTable(
                 "dbo.Carts",
@@ -36,7 +36,7 @@ namespace OnlineRetail.DataAccess.SQL.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.CartItems", "Cart_Id", "dbo.Carts");
-            DropIndex("dbo.CartItems", new[] { "Cart_Id" });
+            DropIndex("dbo.CartItems", new[] { "CartId" });
             DropTable("dbo.Carts");
             DropTable("dbo.CartItems");
         }
