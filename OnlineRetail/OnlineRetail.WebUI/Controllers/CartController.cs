@@ -10,12 +10,14 @@ namespace OnlineRetail.WebUI.Controllers
 {
     public class CartController : Controller
     {
+        IRepository<Customer> customers;
         ICartService cartService;
         IOrderService orderService;
-        public CartController(ICartService CartService, IOrderService OrderService)
+        public CartController(ICartService CartService, IOrderService OrderService, IRepository<Customer> Customers)
         {
             this.cartService = CartService;
             this.orderService = OrderService;
+            this.customers = Customers;
         }
         // GET: Cart
         public ActionResult Index()
@@ -45,17 +47,42 @@ namespace OnlineRetail.WebUI.Controllers
 
             return PartialView(cartSummary);
         }
-
+        
+        [Authorize] //To force user to log in to checkout
         public ActionResult Checkout()
         {
-            return View();
+            //To get/check the customer name based on logged in mail
+            Customer customer = customers.Collection().FirstOrDefault(c => c.Email == User.Identity.Name);
+            if (customer!=null){
+                Order order = new Order()
+                {
+                    Email = customer.Email,
+                    City = customer.City,
+                    State = customer.State,
+                    Street = customer.Street,
+                    FirstName = customer.FirstName,
+                    Surname = customer.LastName,
+                    Country = customer.Country,
+
+                };
+
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Error! Please try again.");
+            }
+            
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Checkout(Order order)
         {
             var cartItems = cartService.GetCartItems(this.HttpContext);
             order.OrderStatus = "Order Created!";
+
+            order.Email = User.Identity.Name;   //To avoid user from bypass
 
             //process for payment
             order.OrderStatus = "Payment Processed!";
